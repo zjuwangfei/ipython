@@ -1,0 +1,128 @@
+{
+ "metadata": {
+  "name": "",
+  "signature": "sha256:fe09e28acde726adb2d426a8f39e3f4d8dc30f215ef8f6a6c26e01d74497f890"
+ },
+ "nbformat": 3,
+ "nbformat_minor": 0,
+ "worksheets": [
+  {
+   "cells": [
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "# \u5b89\u88c5\n",
+      "<pre>sudo pip install jieba</pre>\n",
+      "# \u8f93\u5165\u6587\u672c\uff1a\u5546\u6237\u540d\u79f0\u6587\u4ef6\u53ca\u5546\u6237\u7c7b\u522b"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "!tail mname.txt"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "\u5ea7\u6807\u91cf\u8d29\t\u5316\u5986\u54c1\u5546\u5e97\r\n",
+        "\u5ea7\u9a7e\u4e8c\u624b\u8f66\u7ecf\u7eaa\u516c\u53f8\t\u6c7d\u8f66\u8d27\u8f66\u7ecf\u9500\u5546\uff0d\u4e13\u95e8\u4ece\u4e8b\u65e7\u8f66\u7684\u9500\u552e\u3001\u670d\u52a1\u3001\u7ef4\u4fee\u3001\u96f6\u4ef6\u53ca\u51fa\u79df\r\n",
+        "\u5ea7\u9a6c\u6cb3\u670d\u52a1\u70b9\t\u901a\u8baf\u8bbe\u5907\u548c\u7535\u8bdd\u9500\u552e\r\n",
+        "\u5ea7\u4e0a\u5ba2\t\u5927\u578b\u4ed3\u50a8\u5f0f\u8d85\u7ea7\u5e02\u573a\r\n",
+        "\u5ea7\u4e0a\u5ba2\t\u5176\u4ed6\u6279\u53d1\u5546\r\n",
+        "\u5ea7\u53f3\u94ed\u98df\u54c1\u516c\u53f8SDDS\u5ea7\u4e0a\u5ba2\u9884\u5305\u88c5\u98df\u54c1\t\u5404\u7c7b\u98df\u54c1\u5e97\u53ca\u4e13\u95e8\u98df\u54c1\u96f6\u552e\u5e97\r\n",
+        "\u795a\u534e\u7bb1\u5305\u914d\u4ef6\u8d38\u6613\u6709\u9650\u516c\u53f8\t\u7537\u5973\u53ca\u513f\u7ae5\u5236\u670d\u548c\u670d\u88c5\uff08\u6279\u53d1\u5546\uff09\r\n",
+        "\u795a\u7ecf\u5bb6\u7535\t\u5bb6\u7528\u7535\u5668\u5546\u5e97\r\n",
+        "\u795a\u5ef7\u5bb6\u5177\u7ecf\u9500\u5904\t\u5e03\u6599\u3001\u7f1d\u7eab\u7528\u54c1\u548c\u5176\u4ed6\u7eba\u7ec7\u54c1\uff08\u6279\u53d1\u5546\uff09\r\n",
+        "\u795a\u5cb3\u8336\u53f6\u5546\u884c\t\u672a\u5217\u5165\u5176\u4ed6\u4ee3\u7801\u7684\u5546\u7528\u5668\u6750\uff08\u6279\u53d1\u5546\uff09\r\n"
+       ]
+      }
+     ],
+     "prompt_number": 7
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "# \u5207\u8bcd"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "#coding=utf-8\n",
+      "import jieba\n",
+      "import codecs\n",
+      "\n",
+      "output = []\n",
+      "for line in codecs.open('mname.txt', encoding='utf8').readlines():\n",
+      "    mname, mcc = line.split('\\t')\n",
+      "    mname, mcc = mname.strip(), mcc.strip()\n",
+      "    if mname in ['','-'] or mcc in ['','-']:\n",
+      "            continue\n",
+      "    seg_lst = jieba.cut(mname) # \u9ed8\u8ba4\u7cbe\u51c6\u6a21\u5f0f\n",
+      "    # seg_lst = jieba.cut(mname, cut=True) #\u5168\u6a21\u5f0f\n",
+      "    s = u' '.join(seg_lst)\n",
+      "    output.append(mcc + u'\\t' + s + u'\\n')\n",
+      "    \n",
+      "codecs.open('seg.txt','w', encoding='utf8').writelines(output)"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [],
+     "prompt_number": 22
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "# \u8f93\u51fa\u7ed3\u679c"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "!tail seg.txt"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "\u5316\u5986\u54c1\u5546\u5e97\t\u5ea7 \u6807\u91cf \u8d29\r\n",
+        "\u6c7d\u8f66\u8d27\u8f66\u7ecf\u9500\u5546\uff0d\u4e13\u95e8\u4ece\u4e8b\u65e7\u8f66\u7684\u9500\u552e\u3001\u670d\u52a1\u3001\u7ef4\u4fee\u3001\u96f6\u4ef6\u53ca\u51fa\u79df\t\u5ea7 \u9a7e \u4e8c\u624b\u8f66 \u7ecf\u7eaa \u516c\u53f8\r\n",
+        "\u901a\u8baf\u8bbe\u5907\u548c\u7535\u8bdd\u9500\u552e\t\u5ea7 \u9a6c\u6cb3 \u670d\u52a1 \u70b9\r\n",
+        "\u5927\u578b\u4ed3\u50a8\u5f0f\u8d85\u7ea7\u5e02\u573a\t\u5ea7\u4e0a\u5ba2\r\n",
+        "\u5176\u4ed6\u6279\u53d1\u5546\t\u5ea7\u4e0a\u5ba2\r\n",
+        "\u5404\u7c7b\u98df\u54c1\u5e97\u53ca\u4e13\u95e8\u98df\u54c1\u96f6\u552e\u5e97\t\u5ea7\u53f3\u94ed \u98df\u54c1 \u516c\u53f8 SDDS \u5ea7\u4e0a\u5ba2 \u9884 \u5305\u88c5 \u98df\u54c1\r\n",
+        "\u7537\u5973\u53ca\u513f\u7ae5\u5236\u670d\u548c\u670d\u88c5\uff08\u6279\u53d1\u5546\uff09\t\u795a \u534e \u7bb1\u5305 \u914d\u4ef6 \u8d38\u6613 \u6709\u9650\u516c\u53f8\r\n",
+        "\u5bb6\u7528\u7535\u5668\u5546\u5e97\t\u795a \u7ecf \u5bb6\u7535\r\n",
+        "\u5e03\u6599\u3001\u7f1d\u7eab\u7528\u54c1\u548c\u5176\u4ed6\u7eba\u7ec7\u54c1\uff08\u6279\u53d1\u5546\uff09\t\u795a \u5ef7 \u5bb6\u5177 \u7ecf\u9500\u5904\r\n",
+        "\u672a\u5217\u5165\u5176\u4ed6\u4ee3\u7801\u7684\u5546\u7528\u5668\u6750\uff08\u6279\u53d1\u5546\uff09\t\u795a \u5cb3 \u8336\u53f6 \u5546\u884c\r\n"
+       ]
+      }
+     ],
+     "prompt_number": 23
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [],
+     "language": "python",
+     "metadata": {},
+     "outputs": []
+    }
+   ],
+   "metadata": {}
+  }
+ ]
+}
